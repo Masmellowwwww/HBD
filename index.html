@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise Birthday</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fffbf0;
+            color: #ea0d91;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            /* overflow: hidden; */
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .cake-svg {
+            width: 300px;
+            transition: transform 0.3s;
+        }
+        
+        .wiggle {
+            animation: wiggle 0.5s infinite;
+        }
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
+        }
+        .card {
+            display: none;
+            width: 80%;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #fff;
+            border: 2px solid #ff6666;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff6666;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .falling {
+            position: fixed;
+            top: -50px;
+            left: 50%;
+            opacity: 0.8;
+            animation: fall 5s infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+        .song {
+            margin-top: 20px;
+        }
+        p {
+            color: #ff6666;
+            font-size: 14px;
+        }
+    </style>
+    <script>
+        function createFallingElement() {
+            const element = document.createElement("div");
+            element.classList.add("falling");
+            element.style.left = Math.random() * 100 + "vw";
+            element.style.width = "10px";
+            element.style.height = "10px";
+            element.style.backgroundColor = "#ff6699";
+            element.style.borderRadius = "50%";
+            document.body.appendChild(element);
+            setTimeout(() => element.remove(), 2000);
+        }
+
+        function startFalling() {
+            setInterval(createFallingElement, 300);
+        }
+
+        function blowCandle() {
+            // เริ่มแอนิเมชั่นโปรยลงมา
+            startFalling();
+            // เปลี่ยนรูปเค้กเป็นกล่องของขวัญ
+            const cakeSvg = document.querySelector('.cake-svg');
+            cakeSvg.src = 'image/gift-box-svgrepo-com.svg';
+            cakeSvg.classList.add('wiggle'); // เพิ่มแอนิเมชั่นให้กล่องของขวัญขยับ
+            // เพิ่มอีเวนต์คลิกให้กับรูปภาพกล่องของขวัญ
+            cakeSvg.onclick = showVideo;
+            // ซ่อนปุ่มเป่าเค้ก
+            const button = document.querySelector('button');
+            button.style.display = 'none';
+        }
+
+        function showVideo() {
+            // แทนที่รูปภาพด้วยวิดีโอ
+            const container = document.querySelector('.container');
+            container.innerHTML = `
+                <video width="300" controls autoplay muted onended="showCard()">
+                    <source src="image/bebboo.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            `;
+        }
+
+        function showCard() {
+    // แสดงการ์ดคำอวยพร
+    const card = document.querySelector('.card');
+    card.style.display = 'block';
+    // เลื่อนหน้าจอไปที่การ์ดคำอวยพร
+    card.scrollIntoView({ behavior: 'smooth' });
+    
+}
+
+    </script>
+</head>
+<body>
+    <h1>Happy Birthday Thun 20th</h1>
+    <div class="container">
+        <img src="image/cake-svgrepo-com.svg" alt="เค้กวันเกิด" class="cake-svg">
+    </div>
+    <button onclick="blowCandle()">เป่าเค้ก</button>
+    <div class="card">
+        <h2>คำอวยพร</h2>
+        <img src="image/2.jpg" style="width:300px"> 
+        <p>ขอให้ธันมีความสุขมากๆนะ ขอให้ประสบความสำเร็จในๆทุกๆอย่างที่หวัง อยู่ด้วยกันไปนานๆนะะ ถึงปีนี้จะไม่ได้อยู่ฉลองด้วยกัน ไว้ปีหน้ามาฉลองด้วยกันนะะ หมีพูรักพิทเล้ตมากๆ </p>
+        <p>---- masmellow ----</p>
+    </div>
+    <iframe src="https://open.spotify.com/embed/track/3CHGSEZLaragkUCzjT6HlJ?utm_source=generator" 
+            width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media" class="song">
+    </iframe>
+    <p>ลองกดเล่นเพลงสิ</p>
+</body>
